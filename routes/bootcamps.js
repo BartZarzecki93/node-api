@@ -12,6 +12,10 @@ const {
 } = require('../controllers/bootcamps');
 
 const advancedResults = require('../middleware/advancedResults');
+const {
+	protect,
+	authorize,
+} = require('../middleware/auth');
 const Bootcamps = require('../models/Bootcamps');
 
 //Include other resources routers
@@ -30,7 +34,11 @@ router
 
 router
 	.route('/:id/photo')
-	.put(bootcampPhotoUpload);
+	.put(
+		protect,
+		authorize('publisher', 'admin'),
+		bootcampPhotoUpload
+	);
 
 router
 	.route('/')
@@ -38,12 +46,24 @@ router
 		advancedResults(Bootcamps, 'courses'),
 		getBootcamps
 	)
-	.post(createBootcamp);
+	.post(
+		protect,
+		authorize('publisher', 'admin'),
+		createBootcamp
+	);
 
 router
 	.route('/:id')
-	.put(updateBootcamp)
-	.delete(deleteBootcamps)
+	.put(
+		protect,
+		authorize('publisher', 'admin'),
+		updateBootcamp
+	)
+	.delete(
+		protect,
+		authorize('publisher', 'admin'),
+		deleteBootcamps
+	)
 	.get(getBootcamp);
 
 module.exports = router;
