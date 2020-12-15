@@ -1,7 +1,7 @@
-const express = require('express');
+import { Router } from 'express';
 
 //Controllers
-const {
+import {
 	register,
 	login,
 	getMe,
@@ -9,11 +9,11 @@ const {
 	resetPassword,
 	updateDetails,
 	updatePassword,
-} = require('../controllers/auth');
-const { protect } = require('../middleware/auth');
+} from '../controllers/auth';
+import { protect } from '../middleware/auth';
 
 //Routes
-const router = express.Router();
+const router = Router();
 
 router.route('/register').post(register);
 
@@ -37,4 +37,4 @@ router
 	.route('/updatepassword')
 	.put(protect, updatePassword);
 
-module.exports = router;
+export default router;

@@ -1,10 +1,9 @@
-const jwt = require('jsonwebtoken');
-const asyncHandler = require('./async');
-const ErrorResponse = require('../utils/errorResponse');
-const User = require('../models/Users');
+import { verify } from 'jsonwebtoken';
+import asyncHandler from './async';
+import ErrorResponse from '../utils/errorResponse';
+import User from '../models/Users';
 
-// Protect routes
-exports.protect = asyncHandler(
+export const protect = asyncHandler(
 	async (req, res, next) => {
 		let token;
 
@@ -33,7 +32,7 @@ exports.protect = asyncHandler(
 
 		try {
 			// Verify token
-			const decoded = jwt.verify(
+			const decoded = verify(
 				token,
 				process.env.JWT_SECRET
 			);
@@ -55,7 +54,7 @@ exports.protect = asyncHandler(
 );
 
 // Grant access to specific roles
-exports.authorize = (...roles) => {
+export function authorize(...roles) {
 	return (req, res, next) => {
 		if (!roles.includes(req.user.role)) {
 			return next(
@@ -67,4 +66,4 @@ exports.authorize = (...roles) => {
 		}
 		next();
 	};
-};
+}

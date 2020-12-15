@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const CourseSchema = new mongoose.Schema({
+const CourseSchema = new Schema({
 	title: {
 		type: String,
 		trim: true,
@@ -51,12 +51,12 @@ const CourseSchema = new mongoose.Schema({
 		default: Date.now,
 	},
 	bootcamp: {
-		type: mongoose.Schema.ObjectId,
+		type: Schema.ObjectId,
 		ref: 'Bootcamp',
 		required: true,
 	},
 	user: {
-		type: mongoose.Schema.ObjectId,
+		type: Schema.ObjectId,
 		ref: 'User',
 		required: true,
 	},
@@ -101,7 +101,4 @@ CourseSchema.pre('remove', function () {
 	this.constructor.getAverageCost(this.bootcamp);
 });
 
-module.exports = mongoose.model(
-	'Course',
-	CourseSchema
-);
+export default model('Course', CourseSchema);

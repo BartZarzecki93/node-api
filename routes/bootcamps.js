@@ -1,7 +1,7 @@
-const express = require('express');
+import { Router } from 'express';
 
 //Controllers
-const {
+import {
 	getBootcamps,
 	getBootcamp,
 	deleteBootcamps,
@@ -9,21 +9,21 @@ const {
 	createBootcamp,
 	getBootcampsInRadius,
 	bootcampPhotoUpload,
-} = require('../controllers/bootcamps');
+} from '../controllers/bootcamps';
 
-const advancedResults = require('../middleware/advancedResults');
-const {
+import advancedResults from '../middleware/advancedResults';
+import {
 	protect,
 	authorize,
-} = require('../middleware/auth');
-const Bootcamps = require('../models/Bootcamps');
+} from '../middleware/auth';
+import Bootcamps from '../models/Bootcamps';
 
 //Include other resources routers
 
-const courseRouter = require('./courses');
+import courseRouter from './courses';
 
 //Routes
-const router = express.Router();
+const router = Router();
 
 //Re-route into other resources
 router.use('/:bootcampId/courses', courseRouter);
@@ -66,4 +66,4 @@ router
 	)
 	.get(getBootcamp);
 
-module.exports = router;
+export default router;

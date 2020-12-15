@@ -1,23 +1,23 @@
-const express = require('express');
-const {
+import { Router } from 'express';
+import {
 	getUsers,
 	getUser,
 	createUser,
 	updateUser,
 	deleteUser,
-} = require('../controllers/users');
+} from '../controllers/users';
 
-const Users = require('../models/Users');
+import Users from '../models/Users';
 
-const router = express.Router({
+const router = Router({
 	mergeParams: true,
 });
 
-const advancedResults = require('../middleware/advancedResults');
-const {
+import advancedResults from '../middleware/advancedResults';
+import {
 	protect,
 	authorize,
-} = require('../middleware/auth');
+} from '../middleware/auth';
 
 router.use(protect);
 router.use(authorize('admin'));
@@ -33,4 +33,4 @@ router
 	.put(updateUser)
 	.delete(deleteUser);
 
-module.exports = router;
+export default router;

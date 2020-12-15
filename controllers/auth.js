@@ -1,21 +1,17 @@
-'use strict';
-const ErrorResponse = require('../utils/errorResponse');
-const asyncHandler = require('../middleware/async');
-const dotenv = require('dotenv');
-const path = require('path');
-const Users = require('../models/Users');
-const sendEmail = require('../utils/sendEmail');
-const crypto = require('crypto');
+import ErrorResponse from '../utils/errorResponse';
+import asyncHandler from '../middleware/async';
+
+import { config } from 'dotenv';
+import path from 'path';
+import Users from '../models/Users';
+import sendEmail from '../utils/sendEmail';
+import { createHash } from 'crypto';
 //load env
-dotenv.config({
+config({
 	path: './config/config.env',
 });
 
-//@desc       Register User
-//@route      POST /api/v1/auth/register
-//@access     Public
-
-exports.register = asyncHandler(
+export const register = asyncHandler(
 	async (req, res, next) => {
 		const {
 			name,
@@ -35,11 +31,7 @@ exports.register = asyncHandler(
 	}
 );
 
-//@desc       Login User
-//@route      POST /api/v1/auth/login
-//@access     Public
-
-exports.login = asyncHandler(
+export const login = asyncHandler(
 	async (req, res, next) => {
 		const { email, password } = req.body;
 
@@ -85,11 +77,7 @@ exports.login = asyncHandler(
 	}
 );
 
-//@desc       Get current logged user
-//@route      POST /api/v1/auth/me
-//@access     Private
-
-exports.getMe = asyncHandler(
+export const getMe = asyncHandler(
 	async (req, res, next) => {
 		const user = await Users.findById(
 			req.user._id
@@ -102,10 +90,7 @@ exports.getMe = asyncHandler(
 	}
 );
 
-// @desc      Update user details
-// @route     PUT /api/v1/auth/updatedetails
-// @access    Private
-exports.updateDetails = asyncHandler(
+export const updateDetails = asyncHandler(
 	async (req, res, next) => {
 		const fieldsToUpdate = {
 			name: req.body.name,
@@ -128,10 +113,7 @@ exports.updateDetails = asyncHandler(
 	}
 );
 
-// @desc      Update password
-// @route     PUT /api/v1/auth/updatepassword
-// @access    Private
-exports.updatePassword = asyncHandler(
+export const updatePassword = asyncHandler(
 	async (req, res, next) => {
 		const user = await Users.findById(
 			req.user.id
@@ -158,11 +140,7 @@ exports.updatePassword = asyncHandler(
 	}
 );
 
-// @desc      Forgot password
-// @route     POST /api/v1/auth/forgotpassword
-// @access    Public
-
-exports.forgotPassword = asyncHandler(
+export const forgotPassword = asyncHandler(
 	async (req, res, next) => {
 		const user = await Users.findOne({
 			email: req.body.email,
@@ -223,14 +201,12 @@ exports.forgotPassword = asyncHandler(
 	}
 );
 
-// @desc      Reset password
-// @route     PUT /api/v1/auth/resetpassword/:resettoken
-// @access    Public
-exports.resetPassword = asyncHandler(
+export const resetPassword = asyncHandler(
 	async (req, res, next) => {
 		// Get hashed token
-		const resetPasswordToken = crypto
-			.createHash('sha256')
+		const resetPasswordToken = createHash(
+			'sha256'
+		)
 			.update(req.params.resettoken)
 			.digest('hex');
 

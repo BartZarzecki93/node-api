@@ -1,21 +1,21 @@
-const express = require('express');
-const advancedResults = require('../middleware/advancedResults');
+import { Router } from 'express';
+import advancedResults from '../middleware/advancedResults';
 //Controllers
-const {
+import {
 	getCourses,
 	getCourse,
 	createCourse,
 	updateCourse,
 	deleteCourse,
-} = require('../controllers/courses');
-const Courses = require('../models/Courses');
-const {
+} from '../controllers/courses';
+import Courses from '../models/Courses';
+import {
 	protect,
 	authorize,
-} = require('../middleware/auth');
+} from '../middleware/auth';
 
 //Routes
-const router = express.Router({
+const router = Router({
 	mergeParams: true,
 });
 
@@ -48,4 +48,4 @@ router
 		deleteCourse
 	);
 
-module.exports = router;
+export default router;

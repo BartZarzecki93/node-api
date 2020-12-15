@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const slugify = require('slugify');
-const geocoder = require('../utils/geocdoer');
+import { Schema, model } from 'mongoose';
+import slugify from 'slugify';
+import geocoder from '../utils/geocdoer';
 
-const BootcampSchema = new mongoose.Schema(
+const BootcampSchema = new Schema(
 	{
 		name: {
 			type: String,
@@ -122,7 +122,7 @@ const BootcampSchema = new mongoose.Schema(
 			default: Date.now,
 		},
 		user: {
-			type: mongoose.Schema.ObjectId,
+			type: Schema.ObjectId,
 			ref: 'User',
 			required: true,
 		},
@@ -187,7 +187,4 @@ BootcampSchema.virtual('courses', {
 	justOne: false,
 });
 
-module.exports = mongoose.model(
-	'Bootcamp',
-	BootcampSchema
-);
+export default model('Bootcamp', BootcampSchema);

@@ -1,20 +1,14 @@
-const ErrorResponse = require('../utils/errorResponse');
-const asyncHandler = require('../middleware/async');
-const User = require('../models/Users');
+import ErrorResponse from '../utils/errorResponse';
+import asyncHandler from '../middleware/async';
+import User from '../models/Users';
 
-// @desc      Get all users
-// @route     GET /api/v1/auth/users
-// @access    Private/Admin
-exports.getUsers = asyncHandler(
+export const getUsers = asyncHandler(
 	async (req, res, next) => {
 		res.status(200).json(res.advancedResults);
 	}
 );
 
-// @desc      Get single user
-// @route     GET /api/v1/auth/users/:id
-// @access    Private/Admin
-exports.getUser = asyncHandler(
+export const getUser = asyncHandler(
 	async (req, res, next) => {
 		const user = await User.findById(
 			req.params.id
@@ -27,10 +21,7 @@ exports.getUser = asyncHandler(
 	}
 );
 
-// @desc      Create user
-// @route     POST /api/v1/auth/users
-// @access    Private/Admin
-exports.createUser = asyncHandler(
+export const createUser = asyncHandler(
 	async (req, res, next) => {
 		const user = await User.create(req.body);
 
@@ -41,10 +32,7 @@ exports.createUser = asyncHandler(
 	}
 );
 
-// @desc      Update user
-// @route     PUT /api/v1/auth/users/:id
-// @access    Private/Admin
-exports.updateUser = asyncHandler(
+export const updateUser = asyncHandler(
 	async (req, res, next) => {
 		const user = await User.findByIdAndUpdate(
 			req.params.id,
@@ -62,10 +50,7 @@ exports.updateUser = asyncHandler(
 	}
 );
 
-// @desc      Delete user
-// @route     DELETE /api/v1/auth/users/:id
-// @access    Private/Admin
-exports.deleteUser = asyncHandler(
+export const deleteUser = asyncHandler(
 	async (req, res, next) => {
 		await User.findByIdAndDelete(req.params.id);
 

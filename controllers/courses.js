@@ -1,14 +1,9 @@
-const Course = require('../models/Courses');
-const ErrorResponse = require('../utils/errorResponse');
-const asyncHandler = require('../middleware/async');
-const Bootcamps = require('../models/Bootcamps');
+import Course from '../models/Courses';
+import ErrorResponse from '../utils/errorResponse';
+import asyncHandler from '../middleware/async';
+import Bootcamps from '../models/Bootcamps';
 
-//@desc       Get all courses
-//@route      GET /api/v1/courses
-//@route      GET /api/v1/bootcamps/:bootcampId/courses
-//@access     Public
-
-exports.getCourses = asyncHandler(
+export const getCourses = asyncHandler(
 	async (req, res, next) => {
 		if (req.params.bootcampId) {
 			const courses = await Course.find({
@@ -29,11 +24,7 @@ exports.getCourses = asyncHandler(
 	}
 );
 
-//@desc       Get single course
-//@route      GET /api/v1/course/:id
-//@access     Public
-
-exports.getCourse = asyncHandler(
+export const getCourse = asyncHandler(
 	async (req, res, next) => {
 		const course = await Course.findById(
 			req.params.id
@@ -58,11 +49,7 @@ exports.getCourse = asyncHandler(
 	}
 );
 
-//@desc       Add a Course
-//@route      POST /api/v1/bootcamps/:bootcampId/courses
-//@access     Private
-
-exports.createCourse = asyncHandler(
+export const createCourse = asyncHandler(
 	async (req, res, next) => {
 		req.body.bootcamp = req.params.bootcampId;
 		req.body.user = req.user.id;
@@ -105,11 +92,7 @@ exports.createCourse = asyncHandler(
 	}
 );
 
-//@desc       Update course
-//@route      PUT /api/v1/courses/:id
-//@access     Private
-
-exports.updateCourse = asyncHandler(
+export const updateCourse = asyncHandler(
 	async (req, res, next) => {
 		let course = await Course.findById(
 			req.params.id
@@ -152,11 +135,7 @@ exports.updateCourse = asyncHandler(
 	}
 );
 
-//@desc       Delete course
-//@route      DELETE /api/v1/courses/:id
-//@access     Private
-
-exports.deleteCourse = asyncHandler(
+export const deleteCourse = asyncHandler(
 	async (req, res, next) => {
 		let course = await Course.findById(
 			req.params.id

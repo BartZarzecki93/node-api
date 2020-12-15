@@ -1,9 +1,9 @@
-const crypto = require('crypto');
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import { randomBytes, createHash } from 'crypto';
+import { Schema, model } from 'mongoose';
+import { genSalt, hash, compare } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
 	name: {
 		type: String,
 		required: [true, 'Please add a name'],
@@ -42,8 +42,8 @@ UserSchema.pre('save', async function (next) {
 		next();
 	}
 
-	const salt = await bcrypt.genSalt(10);
-	this.password = await bcrypt.hash(
+	const salt = await genSalt(10);
+	this.password = await hash(
 		this.password,
 		salt
 	);
@@ -51,7 +51,7 @@ UserSchema.pre('save', async function (next) {
 
 // Sign JWT and return
 UserSchema.methods.getSignedJwtToken = function () {
-	return jwt.sign(
+	return sign(
 		{ id: this._id },
 		process.env.JWT_SECRET,
 		{
@@ -64,7 +64,7 @@ UserSchema.methods.getSignedJwtToken = function () {
 UserSchema.methods.matchPassword = async function (
 	enteredPassword
 ) {
-	return await bcrypt.compare(
+	return await compare(
 		enteredPassword,
 		this.password
 	);
@@ -73,13 +73,12 @@ UserSchema.methods.matchPassword = async function (
 // Generate and hash password token
 UserSchema.methods.getResetPasswordToken = function () {
 	// Generate token
-	const resetToken = crypto
-		.randomBytes(20)
-		.toString('hex');
+	const resetToken = randomBytes(20).toString(
+		'hex'
+	);
 
 	// Hash token and set to resetPasswordToken field
-	this.resetPasswordToken = crypto
-		.createHash('sha256')
+	this.resetPasswordToken = createHash('sha256')
 		.update(resetToken)
 		.digest('hex');
 
@@ -90,7 +89,4 @@ UserSchema.methods.getResetPasswordToken = function () {
 	return resetToken;
 };
 
-module.exports = mongoose.model(
-	'User',
-	UserSchema
-);
+export default model('User', UserSchema);

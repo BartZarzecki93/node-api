@@ -1,18 +1,21 @@
-const express = require('express');
-const path = require('path');
-const fileupload = require('express-fileupload');
-const cookieParser = require('cookie-parser');
-const dotenv = require('dotenv');
-const morgan = require('morgan');
-const colors = require('colors');
-const errorHandler = require('./middleware/error');
-const bootcamps = require('./routes/bootcamps');
-const courses = require('./routes/courses');
-const auth = require('./routes/auth');
-const connectDB = require('./config/db');
-const users = require('./routes/users');
+import express, {
+	json,
+	static as st,
+} from 'express';
+import { join } from 'path';
+import fileupload from 'express-fileupload';
+import cookieParser from 'cookie-parser';
+import { config } from 'dotenv';
+import morgan from 'morgan';
+import colors from 'colors';
+import errorHandler from './middleware/error';
+import bootcamps from './routes/bootcamps';
+import courses from './routes/courses';
+import auth from './routes/auth';
+import connectDB from './config/db';
+import users from './routes/users';
 //load env
-dotenv.config({
+config({
 	path: './config/config.env',
 });
 
@@ -22,7 +25,7 @@ connectDB();
 const app = express();
 
 //body parser
-app.use(express.json());
+app.use(json());
 app.use(cookieParser());
 
 //dev logging middleware
@@ -33,9 +36,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(fileupload());
 
 //set static folder
-app.use(
-	express.static(path.join(__dirname, 'public'))
-);
+app.use(st(join(__dirname, 'public')));
 
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/bootcamps', bootcamps);

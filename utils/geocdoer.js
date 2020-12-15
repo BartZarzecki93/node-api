@@ -1,6 +1,6 @@
-const NodeGeocoder = require('node-geocoder');
-const dotenv = require('dotenv');
-dotenv.config({
+import NodeGeocoder from 'node-geocoder';
+import { config } from 'dotenv';
+config({
 	path: './config/config.env',
 });
 
@@ -12,4 +12,4 @@ const options = {
 };
 
 const geocoder = NodeGeocoder(options);
-module.exports = geocoder;
+export default geocoder;
