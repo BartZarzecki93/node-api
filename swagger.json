@@ -1,0 +1,1931 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Dev Campers API",
+    "description": "Fully  working API for dev camps (Node Mongo)"
+  },
+  "host": "localhost:5000",
+  "tags": [
+    {
+      "name": "Bootcamps",
+      "description": "API for bootcamps in the system"
+    },
+    {
+      "name": "Courses",
+      "description": "API for courses in the system"
+    },
+    {
+      "name": "Users",
+      "description": "API for users in the system"
+    },
+    {
+      "name": "Reviews",
+      "description": "API for reviews in the system"
+    },
+    {
+      "name": "Authentication",
+      "description": "API for reviews in the system"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "jwt": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "authorization"
+    }
+  },
+  "paths": {
+    "/api/v1/users": {
+      "get": {
+        "summary": "Get all users - admins only",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Update user - admins only",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User update fields",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostUser"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/{id}": {
+      "get": {
+        "summary": "Get single user - admins only",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "User id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user - admins only",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "User id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User update fields",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateUser"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user - admins only",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "User id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Delete"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reviews": {
+      "get": {
+        "summary": "Get all reviews",
+        "tags": [
+          "Reviews"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Reviews"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/bootcamps/{bootcampId}/reviews": {
+      "get": {
+        "summary": "Get a bootcamp review",
+        "tags": [
+          "Reviews"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bootcampId",
+            "description": "Bootcamp Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Review"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cerate a bootcamp review",
+        "tags": [
+          "Reviews"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bootcampId",
+            "description": "Bootcamp id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Review update fields",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostReview"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Review"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reviews/{id}": {
+      "get": {
+        "summary": "Get a single review",
+        "tags": [
+          "Reviews"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Review Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Review"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a review",
+        "tags": [
+          "Reviews"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Review id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Review update fields",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostReview"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Review"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a review",
+        "tags": [
+          "Reviews"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Review id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Delete"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/courses": {
+      "get": {
+        "summary": "Get all courses",
+        "tags": [
+          "Courses"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Courses"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/bootcamps/{bootcampId}/courses": {
+      "get": {
+        "summary": "Get a bootcamp course",
+        "tags": [
+          "Courses"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bootcampId",
+            "description": "Bootcamp Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Course"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a bootcamp course",
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bootcampId",
+            "description": "Bootcamp id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Review update fields",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostUpdateCourse"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Review"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/courses/{id}": {
+      "get": {
+        "summary": "Get a single course",
+        "tags": [
+          "Courses"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Course Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Course"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a course",
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Course id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Course update fields",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostUpdateCourse"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Course"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a course",
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Course id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Delete"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/bootcamps": {
+      "get": {
+        "summary": "Get all bootcamps",
+        "tags": [
+          "Bootcamps"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Bootcamps"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a bootcamp",
+        "tags": [
+          "Bootcamps"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Bootcamp fields",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostUpdateBootcamp"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Bootcamp"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/bootcamps/{id}": {
+      "get": {
+        "summary": "Get single bootcamp",
+        "tags": [
+          "Bootcamps"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Bootcamp id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Bootcamp"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update bootcamp",
+        "tags": [
+          "Bootcamps"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Bootcamp id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Bootcamp update fields",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostUpdateBootcamp"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Bootcamp"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete bootcamp",
+        "tags": [
+          "Bootcamps"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Bootcamp id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Delete"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/bootcamps/radius/{zipcode}/{distance}": {
+      "get": {
+        "summary": "Get bootcamps by distance",
+        "tags": [
+          "Bootcamps"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "zipcode",
+            "description": "Zip Code",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "distance",
+            "description": "Distance",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Bootcamp"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/bootcamps/{id}/photo": {
+      "put": {
+        "summary": "Get bootcamps by distance",
+        "tags": [
+          "Bootcamps"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "consumes": "multipart/form-data",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "bootcamp Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "upfile",
+            "description": "Bootcamp photo",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Bootcamp"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "summary": "Login",
+        "tags": [
+          "Authentication"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Login fields",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Logged"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "summary": "Register",
+        "tags": [
+          "Authentication"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Registration fields",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Register"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Logged"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/forgotpassword": {
+      "post": {
+        "summary": "Forgot password",
+        "tags": [
+          "Authentication"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Email field",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Forgot"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Logged"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/me": {
+      "get": {
+        "summary": "Get me",
+        "tags": [
+          "Authentication"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/resetpassword/{id}": {
+      "put": {
+        "summary": "Reset password",
+        "tags": [
+          "Authentication"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "resettoken",
+            "description": "Password field",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Reset"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/updatedetails": {
+      "put": {
+        "summary": "Update details",
+        "tags": [
+          "Authentication"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update fields",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Update"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/updatepassword": {
+      "put": {
+        "summary": "Update password",
+        "tags": [
+          "Authentication"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update password fields",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdatePassword"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/logout": {
+      "get": {
+        "summary": "Logout",
+        "tags": [
+          "Authentication"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Delete"
+            }
+          },
+          "401": {
+            "description": "Not authorized to access this route",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "PostUser": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdateUser": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      }
+    },
+    "Delete": {
+      "properties": {
+        "success": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "__v": {
+          "type": "string"
+        }
+      }
+    },
+    "Users": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string"
+        },
+        "count": {
+          "type": "number"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "prev": {
+              "type": "object",
+              "properties": {
+                "page": {
+                  "type": "number"
+                },
+                "limit": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User"
+          }
+        }
+      },
+      "Login": {
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Message": {
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "Review": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "__v": {
+          "type": "string"
+        }
+      }
+    },
+    "Reviews": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string"
+        },
+        "count": {
+          "type": "number"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "prev": {
+              "type": "object",
+              "properties": {
+                "page": {
+                  "type": "number"
+                },
+                "limit": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Review"
+          }
+        }
+      }
+    },
+    "PostUpdateReview": {
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "string"
+        }
+      }
+    },
+    "Course": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "weeks": {
+          "type": "number"
+        },
+        "tuition": {
+          "type": "number"
+        },
+        "minimumSkill": {
+          "type": "string"
+        },
+        "scholarhipsAvailable": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "__v": {
+          "type": "string"
+        }
+      }
+    },
+    "Courses": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string"
+        },
+        "count": {
+          "type": "number"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "prev": {
+              "type": "object",
+              "properties": {
+                "page": {
+                  "type": "number"
+                },
+                "limit": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Course"
+          }
+        }
+      }
+    },
+    "PostUpdateCourse": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "weeks": {
+          "type": "number"
+        },
+        "tuition": {
+          "type": "number"
+        },
+        "minimumSkill": {
+          "type": "string"
+        },
+        "scholarhipsAvailable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Bootcamp": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "averageCost": {
+          "type": "number"
+        },
+        "averageRating": {
+          "type": "number"
+        },
+        "photo": {
+          "type": "string"
+        },
+        "housing": {
+          "type": "boolean"
+        },
+        "jobAssistance": {
+          "type": "boolean"
+        },
+        "jobGuarantee": {
+          "type": "boolean"
+        },
+        "acceptGi": {
+          "type": "boolean"
+        },
+        "location": {
+          "type": "object"
+        },
+        "careers": {
+          "type": "array",
+          "items": []
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "__v": {
+          "type": "string"
+        }
+      }
+    },
+    "Bootcamps": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string"
+        },
+        "count": {
+          "type": "number"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "prev": {
+              "type": "object",
+              "properties": {
+                "page": {
+                  "type": "number"
+                },
+                "limit": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Bootcamp"
+          }
+        }
+      }
+    },
+    "PostUpdateBootcamp": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "averageCost": {
+          "type": "number"
+        },
+        "averageRating": {
+          "type": "number"
+        },
+        "photo": {
+          "type": "string"
+        },
+        "housing": {
+          "type": "boolean"
+        },
+        "jobAssistance": {
+          "type": "boolean"
+        },
+        "jobGuarantee": {
+          "type": "boolean"
+        },
+        "acceptGi": {
+          "type": "boolean"
+        },
+        "location": {
+          "type": "object"
+        },
+        "careers": {
+          "type": "array",
+          "items": []
+        }
+      }
+    },
+    "Logged": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "Login": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "Register": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Forgot": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "Reset": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Update": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdatePassword": {
+      "type": "object",
+      "properties": {
+        "currentPassword": {
+          "type": "string"
+        },
+        "newPassword": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

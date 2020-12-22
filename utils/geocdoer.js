@@ -12,4 +12,5 @@ const options = {
 };
 
 const geocoder = NodeGeocoder(options);
+
 export default geocoder;

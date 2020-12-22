@@ -14,6 +14,8 @@ import courses from './routes/courses';
 import auth from './routes/auth';
 import connectDB from './config/db';
 import users from './routes/users';
+import swaggerUi from 'swagger-ui-express';
+import * as swaggerDocument from './swagger.json';
 //load env
 config({
 	path: './config/config.env',
@@ -23,6 +25,12 @@ config({
 connectDB();
 
 const app = express();
+
+app.use(
+	'/api-docs',
+	swaggerUi.serve,
+	swaggerUi.setup(swaggerDocument)
+);
 
 //body parser
 app.use(json());

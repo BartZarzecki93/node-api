@@ -1,9 +1,10 @@
 import Bootcamp from '../models/Bootcamps';
 import ErrorResponse from '../utils/errorResponse';
 import asyncHandler from '../middleware/async';
-import { geocode } from '../utils/geocdoer';
+import geocoder from '../utils/geocdoer';
 import { config } from 'dotenv';
 import { parse } from 'path';
+
 //load env
 config({
 	path: './config/config.env',
@@ -73,13 +74,8 @@ export const createBootcamp = asyncHandler(
 
 export const updateBootcamp = asyncHandler(
 	async (req, res, next) => {
-		const bootcamp = await Bootcamp.findById(
-			req.params.id,
-			req.body,
-			{
-				new: true,
-				runValidators: true,
-			}
+		let bootcamp = await Bootcamp.findById(
+			req.params.id
 		);
 
 		if (!bootcamp) {
@@ -164,7 +160,8 @@ export const getBootcampsInRadius = asyncHandler(
 		const { zipcode, distance } = req.params;
 
 		//Get lang and lat geocoder
-		const loc = await geocode(zipcode);
+
+		const loc = await geocoder.geocode(zipcode);
 		const lat = loc[0].latitude;
 		const lng = loc[0].longitude;
 
