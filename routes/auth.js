@@ -4,6 +4,7 @@ import { Router } from 'express';
 import {
 	register,
 	login,
+	logout,
 	getMe,
 	forgotPassword,
 	resetPassword,
@@ -18,6 +19,7 @@ const router = Router();
 router.route('/register').post(register);
 
 router.route('/login').post(login);
+router.get('/logout', logout);
 
 router.route('/me').get(protect, getMe);
 

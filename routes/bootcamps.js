@@ -22,11 +22,13 @@ import Bootcamps from '../models/Bootcamps';
 
 import courseRouter from './courses';
 
+import reviewRouter from './reviews';
 //Routes
 const router = Router();
 
 //Re-route into other resources
 router.use('/:bootcampId/courses', courseRouter);
+router.use('/:bootcampId/reviews', reviewRouter);
 
 router
 	.route('/radius/:zipcode/:distance')

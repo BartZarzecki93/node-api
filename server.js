@@ -16,12 +16,22 @@ import connectDB from './config/db';
 import users from './routes/users';
 import swaggerUi from 'swagger-ui-express';
 import * as swaggerDocument from './swagger.json';
-//load env
-config({
+import reviews from './routes/reviews';
+import mongoSanitize from 'express-mongo-sanitize';
+import helmet from 'helmet';
+import xss from 'xss-clean';
+import rateLimit from 'express-rate-limit';
+import hpp from 'hpp';
+import cors from 'cors';
+
+import dotenv from 'dotenv';
+
+// Load env vars
+dotenv.config({
 	path: './config/config.env',
 });
 
-//connect db
+// Connect to database
 connectDB();
 
 const app = express();
@@ -43,13 +53,36 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(fileupload());
 
+//Sanitize data
+app.use(mongoSanitize());
+
+// Set security headers
+app.use(helmet());
+
+// Prevent XSS attacks
+app.use(xss());
+
+// Rate limiting
+const limiter = rateLimit({
+	windowMs: 10 * 60 * 1000, // 10 mins
+	max: 100,
+});
+app.use(limiter);
+
+// Prevent http param pollution
+app.use(hpp());
+
+// Enable CORS
+app.use(cors());
+
 //set static folder
 app.use(st(join(__dirname, 'public')));
 
-app.use('/api/v1/auth', auth);
+//app.use('/api/v1/auth', auth);
 app.use('/api/v1/bootcamps', bootcamps);
 app.use('/api/v1/courses', courses);
 app.use('/api/v1/users', users);
+app.use('/api/v1/reviews', reviews);
 
 app.use(errorHandler);
 

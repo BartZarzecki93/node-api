@@ -15,6 +15,8 @@ import Course from './models/Courses';
 
 import Users from './models/Users';
 
+import Reviews from './models/Reviews'
+
 connect(process.env.MONGO_URI, {
 	useNewUrlParser: true,
 	useCreateIndex: true,
@@ -22,28 +24,12 @@ connect(process.env.MONGO_URI, {
 	useUnifiedTopology: true,
 });
 
-//Read Json files
-
-const bootcamps = JSON.parse(
-	rf(
-		`${__dirname}/_data/bootcamps.json`,
-		'utf-8'
-	)
-);
-
-const courses = JSON.parse(
-	rf(`${__dirname}/_data/courses.json`, 'utf-8')
-);
-
-const users = JSON.parse(
-	rf(`${__dirname}/_data/users.json`, 'utf-8')
-);
-
 const deleteData = async () => {
 	try {
 		await Bootcamp.deleteMany();
 		await Course.deleteMany();
 		await Users.deleteMany();
+		await Reviews.deleteMany();
 		console.log(`Data destroyed`.red);
 		process.exit();
 	} catch (error) {

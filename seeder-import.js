@@ -15,6 +15,8 @@ import Course from './models/Courses';
 
 import Users from './models/Users';
 
+import Reviews from './models/Reviews'
+
 connect(process.env.MONGO_URI, {
 	useNewUrlParser: true,
 	useCreateIndex: true,
@@ -39,11 +41,19 @@ const users = JSON.parse(
 	rf(`${__dirname}/_data/users.json`, 'utf-8')
 );
 
+const reviews = JSON.parse(
+	fs.readFileSync(
+		`${__dirname}/_data/reviews.json`,
+		'utf-8'
+	)
+);
+
 const importData = async () => {
 	try {
 		await Bootcamp.create(bootcamps);
 		await Course.create(courses);
 		await Users.create(users);
+		await Reviews.create(reviews);
 		console.log(`Data imported`.green.inverse);
 		process.exit();
 	} catch (error) {

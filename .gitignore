@@ -2,3 +2,5 @@
 /_data
 
 config/config.env
+
+package-lock.json
