@@ -86,7 +86,7 @@ export const updateBootcamp = asyncHandler(
 				)
 			);
 		}
-
+		console.log(req.params.id);
 		// Make sure user is bootcamp owner
 		if (
 			bootcamp.user.toString() !==
@@ -100,7 +100,7 @@ export const updateBootcamp = asyncHandler(
 				)
 			);
 		}
-
+		console.log(req.params.id);
 		bootcamp = await Bootcamp.findOneAndUpdate(
 			req.params.id,
 			req.body,
@@ -109,7 +109,7 @@ export const updateBootcamp = asyncHandler(
 				runValidators: true,
 			}
 		);
-
+		console.log(bootcamp);
 		res.status(200).json({
 			success: true,
 			msg: `Update bootcamp ${req.params.id}`,
@@ -223,7 +223,8 @@ export const bootcampPhotoUpload = asyncHandler(
 			);
 		}
 
-		const file = req.files.file;
+		const file = req.files.upfile;
+		console.log(req.files.upfile);
 
 		// Make sure the image is a photo
 		if (!file.mimetype.startsWith('image')) {

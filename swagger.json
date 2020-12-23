@@ -1039,7 +1039,7 @@
     },
     "/api/v1/bootcamps/{id}/photo": {
       "put": {
-        "summary": "Get bootcamps by distance",
+        "summary": "Upload image for bootcamp",
         "tags": [
           "Bootcamps"
         ],
@@ -1059,7 +1059,7 @@
           },
           {
             "in": "formData",
-            "name": "upfile",
+            "name": "file",
             "description": "Bootcamp photo",
             "required": true,
             "type": "file"
@@ -1072,7 +1072,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/Bootcamp"
+              "$ref": "#/definitions/Upfile"
             }
           },
           "401": {
@@ -1111,7 +1111,7 @@
           "application/json"
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "Success",
             "schema": {
               "$ref": "#/definitions/Logged"
@@ -1252,7 +1252,7 @@
         }
       }
     },
-    "/api/v1/auth/resetpassword/{id}": {
+    "/api/v1/auth/resetpassword/{resettoken}": {
       "put": {
         "summary": "Reset password",
         "tags": [
@@ -1281,7 +1281,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Logged"
             }
           },
           "401": {
@@ -1375,7 +1375,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Logged"
             }
           },
           "401": {
@@ -1868,6 +1868,17 @@
           "type": "string"
         },
         "email": {
+          "type": "string"
+        }
+      }
+    },
+    "Upfile": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string"
+        },
+        "msg": {
           "type": "string"
         }
       }
