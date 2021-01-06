@@ -26,7 +26,6 @@ export const register = asyncHandler(
 			password,
 			role,
 		});
-
 		sendTokenResponse(user, 200, res);
 	}
 );
@@ -199,7 +198,6 @@ export const forgotPassword = asyncHandler(
 				data: 'Email sent',
 			});
 		} catch (err) {
-			console.log(err);
 			user.resetPasswordToken = undefined;
 			user.resetPasswordExpire = undefined;
 
@@ -251,7 +249,7 @@ export const resetPassword = asyncHandler(
 );
 
 // Get token from model, create cookie and send response
-const sendTokenResponse = (
+export const sendTokenResponse = (
 	user,
 	statusCode,
 	res
@@ -275,7 +273,8 @@ const sendTokenResponse = (
 		options.secure = true;
 	}
 
-	res.status(statusCode)
+	return res
+		.status(statusCode)
 		.cookie('token', token, options)
 		.json({
 			success: true,

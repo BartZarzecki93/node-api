@@ -1,0 +1,6 @@
+{
+  "name": "Admin Account",
+  "email": "admin@gmail.com",
+  "role": "user",
+  "password": "123456"
+}
