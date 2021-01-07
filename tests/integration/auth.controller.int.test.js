@@ -31,7 +31,9 @@ describe(registerUrl, () => {
 
 		expect(response.body.success).toBe(true);
 	});
+});
 
+describe(loginUrl, () => {
 	it('POST ' + loginUrl, async () => {
 		const response = await request
 			.post(loginUrl)
@@ -45,7 +47,9 @@ describe(registerUrl, () => {
 		expect(response.body.success).toBe(true);
 		expect(response.body.token).not.toBe(null);
 	});
+});
 
+describe(forgotUrl, () => {
 	it('POST ' + forgotUrl, async () => {
 		const response = await request
 			.post(forgotUrl)
@@ -59,7 +63,9 @@ describe(registerUrl, () => {
 			'Email sent'
 		);
 	});
+});
 
+describe(meUrl, () => {
 	it('GET ' + meUrl, async () => {
 		const response = await request
 			.get(meUrl)
@@ -68,7 +74,9 @@ describe(registerUrl, () => {
 
 		expect(response.body.success).toBe(true);
 	});
+});
 
+describe(updateUrl, () => {
 	it('PUT ' + updateUrl, async () => {
 		const response = await request
 			.put(updateUrl)
@@ -90,7 +98,8 @@ describe(registerUrl, () => {
 			newUser.role
 		);
 	});
-
+});
+describe(passwordUrl, () => {
 	it('PUT ' + passwordUrl, async () => {
 		const response = await request
 			.put(passwordUrl)
@@ -103,7 +112,8 @@ describe(registerUrl, () => {
 
 		expect(response.body.success).toBe(true);
 	});
-
+});
+describe(logoutUrl, () => {
 	it('GET ' + logoutUrl, async () => {
 		const response = await request
 			.get(logoutUrl)
