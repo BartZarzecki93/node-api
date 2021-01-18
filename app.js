@@ -46,10 +46,8 @@ app.use(
 app.use(json());
 app.use(cookieParser());
 
-//dev logging middleware
-if (process.env.NODE_ENV === 'development') {
-	app.use(morgan('dev'));
-}
+//logging middleware
+app.use(morgan('dev'));
 
 app.use(fileupload());
 
